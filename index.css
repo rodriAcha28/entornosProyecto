@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #0074bd; /* Color azul claro */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px 60px; /* Aumentando el padding horizontal */
+    width: calc(100% - 120px); /* Ancho del 100% menos el doble del padding horizontal */
+    margin: 0 auto; /* Centra el navbar horizontalmente */
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.navbar-title {
+    font-size: 20px;
+}
+
+.navbar-center {
+    flex: 2;
+    text-align: center;
+}
+
+.navbar-link {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.navbar-link:hover {
+    text-decoration: underline;
+}
+
+.navbar-right {
+    flex: 1;
+    text-align: right;
+}
+
+.navbar-login {
+    color: white;
+    text-decoration: none;
+}
+
+.content-box {
+    background-color: #f0f0f0; /* Color de fondo */
+    border: 2px solid #0074bd; /* Borde de color azul claro */
+    border-radius: 10px; /* Esquinas redondeadas */
+    padding: 20px; /* Padding en los bordes */
+    padding-left: 40px;
+    margin: 20px auto; /* Margen superior e inferior, centrado horizontalmente */
+    width: 85%; /* Ancho máximo del cuadro */
+}
+
+.content-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0074bd; /* Color de texto azul claro */
+}
+
+.index {
+    margin-top: 20px;
+}
+
+.index ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.index ul li {
+    margin-bottom: 10px;
+}
+
+.index ul ul {
+    margin-top: 5px;
+    padding-left: 20px;
+}
+
+.index-box {
+    background-color: white; /* Fondo blanco */
+    padding-top: 0%;
+    padding: 20px; /* Padding en los bordes */
+    margin: 20px auto; /* Margen superior e inferior, centrado horizontalmente */
+    max-width: 800px; /* Ancho máximo del cuadro */
+    border-radius: 10px; /* Esquinas redondeadas */
+}
+.index a {
+    color: #333; /* Cambiar el color del texto */
+    text-decoration: none; /* Eliminar la subrayado */
+}

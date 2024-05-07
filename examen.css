@@ -1,0 +1,10 @@
+.code {
+    width: 500px;
+    height: 300px;
+    margin: 5%;
+}
+
+.botonEjecutar {
+    background-color: rgb(68, 143, 186) !important;
+    color: blue;
+}

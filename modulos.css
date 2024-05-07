@@ -1,0 +1,62 @@
+.pastel-blue {
+    background-color: #6dabc0 !important; /* Color de fondo celeste pastel */
+    border-radius: 10px; /* Esquinas redondeadas */
+    padding: 30px; /* Padding en los bordes */
+    padding-left: 40px;
+    margin: 20px auto; /* Margen superior e inferior, centrado horizontalmente */
+    width: 85%; /* Ancho máximo del cuadro */
+    height: 30%;
+    position: relative;
+}
+
+.fundamentos {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    padding-left: 6.5%;
+    padding-right: 6.5%;
+}
+
+.fundamento {
+    width: 650px; /* Aumenta el ancho de los cuadros */
+    padding: 20px;
+    border: 1px solid #ccc; /* Borde delgado */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluir el padding y borde en el ancho total */
+    height: 490px;
+    overflow: hidden; /* Evitar que el contenido se desborde */
+}
+
+.fundamento h2 {
+    margin-top: 0; /* Elimina el margen superior del título */
+}
+
+.content-title2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff; /* Color de texto azul claro */
+}
+
+
+.content-title2 {
+    color: white; /* Color del texto blanco */
+}
+
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.arrow-button:first-child {
+    left: 10px;
+}
+
+.arrow-button:last-child {
+    right: 10px;
+}
