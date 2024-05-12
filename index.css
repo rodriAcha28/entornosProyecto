@@ -64,6 +64,10 @@ body {
 
 .index {
     margin-top: 20px;
+    background-color: #e1ebe9; /* Color de fondo */
+    border: 2px solid #76b2d8; /* Borde de color azul claro */
+    border-radius: 5px;
+    padding: 30px;
 }
 
 .index ul {
