@@ -38,7 +38,7 @@
         </div>
         <div class="fundamento">
             <div class="editor">
-                <textarea id="code" class="code" placeholder="Escribe tu código aquí"><?php
+            <textarea id="code" class="code" placeholder="Escribe tu código aquí"><?php
                 // Credenciales de la base de datos
                 $servidor = "localhost"; 
                 $usuario = "root"; 
@@ -66,6 +66,12 @@
                     // Obtener el resultado de la consulta
                     $fila = mysqli_fetch_assoc($resultado);
                     $ejercicioTexto = $fila['ejerciciotexto'];
+
+                    // Separar las partes editable y no editable
+                    $partes = explode('[parte editable]', $ejercicioTexto);
+                    $no_editable = $partes[0];
+                    $editable = $partes[1];
+                    echo $no_editable;
                 } else {
                     // No se encontraron filas
                     $ejercicioTexto = "No se encontraron datos para el ID 1";
@@ -73,10 +79,35 @@
 
                 // Cerrar la conexión
                 mysqli_close($conexion);
+            ?></textarea>
+            <!--<script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var textarea = document.getElementById("code");
+                var initialText = textarea.value;
 
-                echo $ejercicioTexto;
-                ?></textarea>
-                <button id="botonEjecutar" onclick="runCode()">Ejecutar</button>
+                // Establecer el cursor al final del texto
+                textarea.focus();
+                textarea.setSelectionRange(initialText.indexOf("*"), initialText.indexOf("*") + 4);
+
+                // Capturar eventos de teclado
+                textarea.addEventListener("keydown", function(event) {
+                    var caretPosition = textarea.selectionStart;
+
+                    // Si la tecla presionada está dentro de los asteriscos, permitir la edición
+                    if (caretPosition >= initialText.indexOf("*") && caretPosition < initialText.indexOf("*") + 4) {
+                        textarea.removeAttribute("readonly");
+                    } else {
+                        textarea.setAttribute("readonly", true);
+                    }
+                });
+
+                // Capturar el evento de pegado y evitar que se modifique el contenido
+                textarea.addEventListener("paste", function(event) {
+                    event.preventDefault();
+                });
+            });
+            </script>-->
+            <button id="botonEjecutar" onclick="runCode()">Ejecutar</button>
             </div>
             <div id="output"></div>
             <script src="script.js"></script>

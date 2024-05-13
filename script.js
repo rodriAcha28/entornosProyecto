@@ -1,7 +1,8 @@
 function runCode() {
-    var code = document.getElementById("code").value;
-    var output = document.getElementById("output");
-    output.innerHTML = ""; // Limpiamos el resultado anterior
+        var code = document.getElementById("code").value;
+        // Aquí puedes manipular 'code' para enviar solo la parte editable al servidor
+        var output = document.getElementById("output");
+        output.innerHTML = ""; // Limpiamos el resultado anterior
 
     // Aquí hacemos una petición AJAX para enviar el código al servidor
     // y obtener el resultado
