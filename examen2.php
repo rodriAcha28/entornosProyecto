@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar">
         <div class="navbar-left">
-            <span class="navbar-title">Curso PHP</span>
+            <span class="navbar-title">Curso</span>
         </div>
         <div class="navbar-center">
             <a href="#" class="navbar-link">Inicio</a>
