@@ -11,6 +11,8 @@ body {
     padding: 30px 60px; /* Aumentando el padding horizontal */
     width: calc(100% - 120px); /* Ancho del 100% menos el doble del padding horizontal */
     margin: 0 auto; /* Centra el navbar horizontalmente */
+    font-family: 'Georgia', serif;
+    font-size: 16px;
 }
 
 .navbar-left {
@@ -54,6 +56,8 @@ body {
     padding-left: 40px;
     margin: 20px auto; /* Margen superior e inferior, centrado horizontalmente */
     width: 85%; /* Ancho máximo del cuadro */
+    font-family: 'Georgia', serif;
+    font-size: 16px;
 }
 
 .content-title {
@@ -95,4 +99,6 @@ body {
 .index a {
     color: #333; /* Cambiar el color del texto */
     text-decoration: none; /* Eliminar la subrayado */
+    font-family: 'Georgia', serif;
+    font-size: 16px;
 }
