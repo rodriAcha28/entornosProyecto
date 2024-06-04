@@ -25,18 +25,19 @@ $ejercicio = $result_ejercicio->fetch_assoc();
     <link rel="stylesheet" href="examen.css">
     <link rel="stylesheet" href="index.css">
     <style>
+        /* Estilo para el modal */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px; 
         }
 
         .modal-content {
@@ -104,10 +105,10 @@ $ejercicio = $result_ejercicio->fetch_assoc();
             <br>
             <button id="showAnswerBtn" onclick="document.getElementById('myModal').style.display='block'" style="bottom: 10px; right: 10px;">Indicaciones</button>
             <br>
-            <button id="boton1" class="dynamic-button" onclick="openModal('ayuda1')">Primera Ayuda</button>
-            <button id="boton2" class="dynamic-button" onclick="openModal('ayuda2')">Segunda Ayuda</button>
-            <button id="boton3" class="dynamic-button" onclick="openModal('ayuda3')">Tercera Ayuda</button>
-            <button id="boton4" class="dynamic-button" onclick="openModal('ayuda4')">Cuarta Ayuda</button>
+            <button id="boton1" class="dynamic-button">Botón 1</button>
+            <button id="boton2" class="dynamic-button">Botón 2</button>
+            <button id="boton3" class="dynamic-button">Botón 3</button>
+            <button id="boton4" class="dynamic-button">Botón 4</button>
         </div>
         <div class="fundamento">
             <div class="editor">
@@ -121,8 +122,8 @@ $ejercicio = $result_ejercicio->fetch_assoc();
     </div>
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <p id="modalText">Querido estudiante, a continuación encontrarás un fragmento de código. Tu tarea es editar solo las partes que están marcadas con <span class="highlight">????</span>. Asegúrate de no modificar otras partes del código para evitar errores. Las secciones que debes editar están resaltadas en negrita y rojo para tu conveniencia.</p>
+            <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+            <p>Querido estudiante, a continuación encontrarás un fragmento de código. Tu tarea es editar solo las partes que están marcadas con <span class="highlight">????</span>. Asegúrate de no modificar otras partes del código para evitar errores. Las secciones que debes editar están resaltadas en negrita y rojo para tu conveniencia.</p>
         </div>
     </div>
 
@@ -134,7 +135,8 @@ $ejercicio = $result_ejercicio->fetch_assoc();
                 modal.style.display = "none";
             }
         }
-
+    </script>
+    <script>
         let clickCount = 0;
 
         function handleButtonClick() {
@@ -167,50 +169,6 @@ $ejercicio = $result_ejercicio->fetch_assoc();
                     clickCount = 0; // Reiniciar el contador si es mayor que 4
                     break;
             }
-        }
-
-        function runCode() {
-            const code = document.getElementById('code').value;
-
-            // Realiza la solicitud AJAX al servidor
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'run_code.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    const response = JSON.parse(xhr.responseText);
-                    document.getElementById('output').innerText = response.output; // Muestra el resultado en el div
-                    if (response.success) {
-                        alert('¡Examen correcto!');
-                    } else {
-                        alert('La respuesta no es correcta. Inténtalo de nuevo.');
-                    }
-                }
-            };
-            xhr.send('code=' + encodeURIComponent(code) + '&id_ejercicio=' + <?php echo $id_ejercicio; ?>);
-        }
-
-        function openModal(ayuda) {
-            const idEjercicio = <?php echo $id_ejercicio; ?>;
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', `get_ayuda.php?id_ejercicio=${idEjercicio}&ayuda=${ayuda}`, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        document.getElementById('modalText').innerText = response.data;
-                        document.getElementById('myModal').style.display = 'block';
-                    } else {
-                        alert('No se pudo obtener la ayuda.');
-                    }
-                }
-            };
-            xhr.send();
-        }
-
-        function closeModal() {
-            document.getElementById('myModal').style.display = 'none';
         }
     </script>
 </body>

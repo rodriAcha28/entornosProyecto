@@ -46,7 +46,11 @@ $result_ejercicios = $conn->query($sql_ejercicios);
             <a href="#" class="navbar-link">Recursos</a>
         </div>
         <div class="navbar-right">
-            <a href="#" class="navbar-login"></a>
+            <div class="user-info">
+                <!--<img src="user.jpg" alt="Usuario" class="user-image">
+                <span class="user-role"><php echo ($_SESSION['tipo_usuario'] == 'maestro') ? 'Maestro' : 'Estudiante'; ?></span>-->
+                <a href="logout.php" class="navbar-login">Cerrar Sesión</a>
+            </div>
         </div>
     </nav>
     <div class="content-container">      

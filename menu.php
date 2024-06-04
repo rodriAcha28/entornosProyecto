@@ -29,14 +29,14 @@
     </div>
     <div class="fundamentos">
         <div class="fundamento">
-            <h2>Iniciar sesión como Maestro</h2>
+            <h2>Maestro</h2>
             <a href="login_maestro.php" class="login-button">
                 <img src="imagen_maestro.jpg" alt="Imagen Maestro" class="login-image">
                 <span>Iniciar sesión</span>
             </a>
         </div>
         <div class="fundamento">
-            <h2>Iniciar sesión como Estudiante</h2>
+            <h2>Estudiante</h2>
             <a href="login_estudiante.php" class="login-button">
                 <img src="imagen_estudiante.jpg" alt="Imagen Estudiante" class="login-image">
                 <span>Iniciar sesión</span>
