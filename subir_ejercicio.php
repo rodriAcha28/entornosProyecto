@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            
             margin: 0;
         }
 
@@ -53,7 +53,9 @@ if (isset($_POST['submit'])) {
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 500px;
+            margin-top: 50px;
+            margin-bottom: 50px;
         }
 
         .form-container h2 {
@@ -173,8 +175,6 @@ if (isset($_POST['submit'])) {
             
             <label for="ayuda1">Texto de Ayuda para Segundo Intento:</label><br>
             <textarea id="ayuda1" name="ayuda1"></textarea><br><br>
-        </div>
-        <div class="form-container">
             
             <label for="ayuda2">Texto de Ayuda para Tercero Intento:</label><br>
             <textarea id="ayuda2" name="ayuda2"></textarea><br><br>
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
             
             <input type="submit" name="submit" value="Subir Ejercicio">
         </form>
-        <button id="showAnswerBtn" onclick="document.getElementById('myModal').style.display='block'" style="bottom: 10px; right: 10px;">Indicaciones</button>
+        <button id="showAnswerBtn" onclick="document.getElementById('myModal').style.display='block'" style="bottom: 10px; right: 10px; height:30px; margin-top: 15px; background-color: #8acbf6;">Indicaciones</button>
     </div>
     <div id="myModal" class="modal">
         <div class="modal-content">
