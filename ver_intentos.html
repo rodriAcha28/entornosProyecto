@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Intentos de Estudiantes - Clase</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-records {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Intentos de Estudiantes en <?php echo htmlspecialchars($clase['nombre_clase']); ?></h2>
+    
+    <table>
+        <tr>
+            <th>Estudiante</th>
+            <th>Ejercicio</th>
+            <th>Código</th>
+            <th>Resultado</th>
+            <th>Fecha</th>
+        </tr>
+        <?php
+        if ($result_intentos->num_rows > 0) {
+            while ($row = $result_intentos->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</td>";
+                echo "<td>" . htmlspecialchars($row['titulo']) . "</td>";
+                echo "<td><pre>" . htmlspecialchars($row['codigo']) . "</pre></td>";
+                echo "<td><pre>" . htmlspecialchars($row['resultado']) . "</pre></td>";
+                echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='5' class='no-records'>No hay intentos registrados para esta clase.</td></tr>";
+        }
+        ?>
+    </table>
+</body>
+</html>

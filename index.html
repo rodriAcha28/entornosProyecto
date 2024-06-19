@@ -3,63 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso PHP</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Apoyo para Docentes en PHP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: rgb(183, 151, 211);
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: rgb(146, 60, 221);
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: rgb(143, 89, 191) 3px solid;
+        }
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+        header ul {
+            padding: 0;
+            list-style: none;
+        }
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+        header #branding {
+            float: left;
+        }
+        header #branding h1 {
+            margin: 0;
+        }
+        header nav {
+            float: right;
+            margin-top: 10px;
+        }
+        #showcase {
+            position: relative;
+            min-height: 400px;
+            background: url('showcase.jpg') no-repeat center center/cover;
+            text-align: center;
+            color: #fff;
+        }
+        #showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5); /* Overlay color */
+        }
+        #showcase .content {
+            position: relative;
+            z-index: 2;
+        }
+        #showcase h1 {
+            margin-top: 0px;
+            padding-top: 50px;
+            font-size: 55px;
+            margin-bottom: 10px;
+        }
+        #showcase p {
+            font-size: 20px;
+        }
+        .button {
+            display: inline-block;
+            color: #fff;
+            background: rgb(143, 89, 191);
+            padding: 10px 20px;
+            text-decoration: none;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background: rgb(66, 15, 110);
+            transition: background 0.3s;
+        }
+        #main-content {
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            background: rgb(192, 218, 237);
+        }
+        #main-content h2 {
+            font-size: 30px;
+        }
+        #main-content p {
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-left">
-            <span class="navbar-title">Curso PHP</span>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1>Apoyo para Docentes</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#main-content">Inicio</a></li>
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
         </div>
-        <div class="navbar-center">
-            <a href="#" class="navbar-link">Inicio</a>
-            <a href="#" class="navbar-link">Lecciones</a>
-            <a href="#" class="navbar-link">Recursos</a>
+    </header>
+
+    <section id="showcase">
+        <div class="content">
+            <h1>Facilita la Evaluación de PHP</h1>
+            <p>Una plataforma diseñada para docentes que desean evaluar los conocimientos en PHP de sus estudiantes.</p>
+            <a href="menu.php" class="button">Unirse Ahora</a>
+            <a href="menu.php" class="button">Ingresar</a>
         </div>
-        <div class="navbar-right">
-            <a href="#" class="navbar-login">Iniciar sesión</a>
+    </section>
+
+    <section id="main-content">
+        <div class="container">
+            <h2>¿Qué Ofrecemos?</h2>
+            <p>Nuestra plataforma permite a los docentes crear y gestionar exámenes de PHP de manera eficiente, ofreciendo herramientas para monitorear el progreso y el rendimiento de los estudiantes.</p>
         </div>
-    </nav>
-    <div class="content-box">
-        <span class="content-title">Fundamentos PHP</span>
-    </div>
-    <div class="index-box">
-        <div class="index">
-            <ul>
-                <br>
-                <li><a onclick="window.location.href = 'modulo1.html';">Modulo 1: Fundamentos de PHP</a>
-                    <ul>
-                        <br>
-                        <li><a onclick="window.location.href = 'examen1.html';">Prueba 1</a></li>
-                    </ul>
-                </li>
-                <br>
-                <li><a href="#">Modulo 2</a>
-                    <ul>
-                        <br>
-                        <li><a href="#">Prueba 2</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Modulo 3</a>
-                    <ul>
-                        <br>
-                        <li><a href="#">Prueba 3</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Modulo 4</a>
-                    <ul>
-                        <br>
-                        <li><a href="#">Prueba 4</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Modulo 5</a>
-                    <ul>
-                        <br>
-                        <li><a href="#">Prueba 4</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
+    </section>
 </body>
 </html>
