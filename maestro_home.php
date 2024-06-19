@@ -55,7 +55,7 @@ $result = $conn->query($sql);
             <a href="#" class="navbar-link">Recursos</a>
         </div>
         <div class="navbar-right">
-            <a href="#" class="navbar-login"></a>
+        <a href="logout.php" class="navbar-login">Cerrar Sesión</a>
         </div>
     </nav>
     <h2>Mis Clases</h2>

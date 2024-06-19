@@ -24,6 +24,57 @@ $ejercicio = $result_ejercicio->fetch_assoc();
     <link rel="stylesheet" href="modulos.css">
     <link rel="stylesheet" href="examen.css">
     <link rel="stylesheet" href="index.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 40%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .highlight {
+            color: red;
+            font-weight: bold;
+        }
+        .dynamic-button {
+            display: none;
+            margin: 10px;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -36,7 +87,7 @@ $ejercicio = $result_ejercicio->fetch_assoc();
             <a href="#" class="navbar-link">Recursos</a>
         </div>
         <div class="navbar-right">
-            <a href="#" class="navbar-login"></a>
+        <a href="logout.php" class="navbar-login">Cerrar Sesión</a>
         </div>
     </nav>
 
@@ -48,76 +99,120 @@ $ejercicio = $result_ejercicio->fetch_assoc();
     <div class="fundamentos">
         <div class="fundamento">
             <?php echo nl2br(htmlspecialchars($ejercicio['descripcion'])); ?>
+            <br>
+            <br>
+            <br>
+            <button id="showAnswerBtn" onclick="document.getElementById('myModal').style.display='block'" style="bottom: 10px; right: 10px;">Indicaciones</button>
+            <br>
+            <button id="boton1" class="dynamic-button" onclick="openModal('ayuda1')">Primera Ayuda</button>
+            <button id="boton2" class="dynamic-button" onclick="openModal('ayuda2')">Segunda Ayuda</button>
+            <button id="boton3" class="dynamic-button" onclick="openModal('ayuda3')">Tercera Ayuda</button>
+            <button id="boton4" class="dynamic-button" onclick="openModal('ayuda4')">Cuarta Ayuda</button>
         </div>
         <div class="fundamento">
             <div class="editor">
                 <textarea id="code" class="code" placeholder="Escribe tu código aquí"><?php echo htmlspecialchars($ejercicio['ejerciciotexto']); ?></textarea>
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        var textarea = document.getElementById("code");
-                        var initialText = textarea.value;
-
-                        // Establecer el cursor al final del texto
-                        textarea.focus();
-                        textarea.setSelectionRange(initialText.indexOf("*"), initialText.indexOf("*") + 4);
-
-                        // Capturar eventos de teclado
-                        textarea.addEventListener("keydown", function(event) {
-                            var caretPosition = textarea.selectionStart;
-
-                            // Si la tecla presionada está dentro de los asteriscos, permitir la edición
-                            if (caretPosition >= initialText.indexOf("*") && caretPosition < initialText.indexOf("*") + 4) {
-                                textarea.removeAttribute("readonly");
-                            } else {
-                                textarea.setAttribute("readonly", true);
-                            }
-                        });
-
-                        // Capturar el evento de pegado y evitar que se modifique el contenido
-                        textarea.addEventListener("paste", function(event) {
-                            event.preventDefault();
-                        });
-                    });
-
-                    function runCode() {
-                        var code = document.getElementById('code').value;
-                        var outputDiv = document.getElementById('output');
-                        outputDiv.innerHTML = ''; // Clear previous output
-
-                        // Run the code (This is a placeholder for actual code execution logic)
-                        try {
-                            // Simulate code execution
-                            var result = eval(code);
-                            outputDiv.innerHTML = result;
-
-                            // Save the attempt via AJAX
-                            saveAttempt(code, result);
-                        } catch (e) {
-                            outputDiv.innerHTML = 'Error: ' + e.message;
-
-                            // Save the attempt with error message
-                            saveAttempt(code, 'Error: ' + e.message);
-                        }
-                    }
-
-                    function saveAttempt(code, result) {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', 'guardar_intento.php', true);
-                        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState == 4 && xhr.status == 200) {
-                                console.log('Intento guardado');
-                            }
-                        };
-                        xhr.send('id_ejercicio=<?php echo $id_ejercicio; ?>&codigo=' + encodeURIComponent(code) + '&resultado=' + encodeURIComponent(result));
-                    }
-                </script>
-                <button id="botonEjecutar" onclick="runCode()">Ejecutar</button>
+                
+                <button id="botonEjecutar" onclick="handleButtonClick()">Ejecutar</button>
             </div>
             <div id="output"></div>
             <script src="script.js"></script>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <p id="modalText">Querido estudiante, a continuación encontrarás un fragmento de código. Tu tarea es editar solo las partes que están marcadas con <span class="highlight">????</span>. Asegúrate de no modificar otras partes del código para evitar errores. Las secciones que debes editar están resaltadas en negrita y rojo para tu conveniencia.</p>
+        </div>
+    </div>
+
+    <script>
+        // Para cerrar el modal cuando el usuario haga clic fuera del contenido
+        window.onclick = function(event) {
+            var modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        let clickCount = 0;
+
+        function handleButtonClick() {
+            runCode();
+
+            clickCount++;
+
+            // Ocultar todos los botones
+            document.getElementById('boton1').style.display = 'none';
+            document.getElementById('boton2').style.display = 'none';
+            document.getElementById('boton3').style.display = 'none';
+            document.getElementById('boton4').style.display = 'none';
+
+            // Mostrar el botón correspondiente según la cantidad de clics
+            switch(clickCount) {
+                case 1:
+                    document.getElementById('boton1').style.display = 'block';
+                    break;
+                case 2:
+                    document.getElementById('boton2').style.display = 'block';
+                    break;
+                case 3:
+                    document.getElementById('boton3').style.display = 'block';
+                    break;
+                case 4:
+                    document.getElementById('boton4').style.display = 'block';
+                    clickCount = 0; // Reiniciar el contador para que el ciclo comience de nuevo
+                    break;
+                default:
+                    clickCount = 0; // Reiniciar el contador si es mayor que 4
+                    break;
+            }
+        }
+
+        function runCode() {
+            const code = document.getElementById('code').value;
+
+            // Realiza la solicitud AJAX al servidor
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'run_code.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    const response = JSON.parse(xhr.responseText);
+                    document.getElementById('output').innerText = response.output; // Muestra el resultado en el div
+                    if (response.success) {
+                        alert('¡Examen correcto!');
+                    } else {
+                        alert('La respuesta no es correcta. Inténtalo de nuevo.');
+                    }
+                }
+            };
+            xhr.send('code=' + encodeURIComponent(code) + '&id_ejercicio=' + <?php echo $id_ejercicio; ?>);
+        }
+
+        function openModal(ayuda) {
+            const idEjercicio = <?php echo $id_ejercicio; ?>;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `get_ayuda.php?id_ejercicio=${idEjercicio}&ayuda=${ayuda}`, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        document.getElementById('modalText').innerText = response.data;
+                        document.getElementById('myModal').style.display = 'block';
+                    } else {
+                        alert('No se pudo obtener la ayuda.');
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
 

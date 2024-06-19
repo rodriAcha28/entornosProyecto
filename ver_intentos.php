@@ -12,8 +12,11 @@ if ($conn->connect_error) {
 }
 
 // Obtener información de la clase
-$sql_clase = "SELECT * FROM Clases WHERE id_clase = '$id_clase'";
-$result_clase = $conn->query($sql_clase);
+$sql_clase = "SELECT * FROM Clases WHERE id_clase = ?";
+$stmt_clase = $conn->prepare($sql_clase);
+$stmt_clase->bind_param("i", $id_clase);
+$stmt_clase->execute();
+$result_clase = $stmt_clase->get_result();
 $clase = $result_clase->fetch_assoc();
 
 // Obtener intentos de los estudiantes
@@ -30,9 +33,12 @@ $sql_intentos = "SELECT
                 FROM Intentos
                 INNER JOIN Estudiantes ON Intentos.id_estudiante = Estudiantes.id_estudiante
                 INNER JOIN Ejercicios ON Intentos.id_ejercicio = Ejercicios.id_ejercicio
-                WHERE Ejercicios.id_clase = '$id_clase'
+                WHERE Ejercicios.id_clase = ?
                 ORDER BY Intentos.fecha DESC";
-$result_intentos = $conn->query($sql_intentos);
+$stmt_intentos = $conn->prepare($sql_intentos);
+$stmt_intentos->bind_param("i", $id_clase);
+$stmt_intentos->execute();
+$result_intentos = $stmt_intentos->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -43,35 +49,12 @@ $result_intentos = $conn->query($sql_intentos);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Intentos de Estudiantes en <?php echo htmlspecialchars($clase['nombre_clase']); ?></h2>
-    
-    <table border="1">
-        <tr>
-            <th>Estudiante</th>
-            <th>Ejercicio</th>
-            <th>Código</th>
-            <th>Resultado</th>
-            <th>Fecha</th>
-        </tr>
-        <?php
-        if ($result_intentos->num_rows > 0) {
-            while ($row = $result_intentos->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>" . htmlspecialchars($row['nombre']) . " " . htmlspecialchars($row['apellido']) . "</td>";
-                echo "<td>" . htmlspecialchars($row['titulo']) . "</td>";
-                echo "<td><pre>" . htmlspecialchars($row['codigo']) . "</pre></td>";
-                echo "<td><pre>" . htmlspecialchars($row['resultado']) . "</pre></td>";
-                echo "<td>" . htmlspecialchars($row['fecha']) . "</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='5'>No hay intentos registrados para esta clase.</td></tr>";
-        }
-        ?>
-    </table>
+    <?php include 'ver_intentos.html'; ?>
 </body>
 </html>
 
 <?php
+$stmt_clase->close();
+$stmt_intentos->close();
 $conn->close();
 ?>
