@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Unirse a una Clase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .form-container h2 {
+            color: #007BFF;
+            text-align: center;
+        }
+
+        .form-container label {
+            color: #333333;
+            font-weight: bold;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .form-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .form-container .success-message,
+        .form-container .error-message {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .form-container .success-message {
+            color: green;
+        }
+
+        .form-container .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Unirse a una Clase</h2>
+        <form action="unirse_clase.php" method="post">
+            <label for="codigo_clase">Código de la Clase:</label><br>
+            <input type="text" id="codigo_clase" name="codigo_clase" required><br><br>
+            <input type="submit" name="submit" value="Unirse">
+        </form>
+    </div>
+</body>
+</html>

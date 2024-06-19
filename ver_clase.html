@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clase</title>
+    
+    <link rel="stylesheet" href="modulos.css">
+    <link rel="stylesheet" href="examen.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="clase.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <span class="navbar-title">Curso</span>
+        </div>
+        <div class="navbar-center">
+            <a href="#" class="navbar-link">Inicio</a>
+            <a href="#" class="navbar-link">Lecciones</a>
+            <a href="#" class="navbar-link">Recursos</a>
+        </div>
+        <div class="navbar-right">
+            <div class="user-info">
+                <!--<img src="user.jpg" alt="Usuario" class="user-image">
+                <span class="user-role">Rol</span>-->
+                <a href="logout.php" class="navbar-login">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+    <div class="content-container">      
+        <h2 id="class-title"></h2>
+        <div class="grid-container">    
+            <div class="box">
+                <h3>Estudiantes</h3>
+                <ul id="student-list">
+                    <!-- Los estudiantes serán cargados aquí -->
+                </ul>
+            </div>
+            <div class="box">
+                <h3>Ejercicios</h3>
+                <ul id="exercise-list">
+                    <!-- Los ejercicios serán cargados aquí -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="teacher-buttons" style="display: none;">
+        <button id="create-exercise">Crear Ejercicio</button>
+        <button id="view-attempts">Ver Intentos de Estudiantes</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id_clase = urlParams.get('id_clase');
+
+            fetch(`ver_clase.php?id_clase=${id_clase}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('class-title').textContent = data.clase.nombre_clase;
+
+                    const studentList = document.getElementById('student-list');
+                    data.estudiantes.forEach(estudiante => {
+                        const li = document.createElement('li');
+                        li.textContent = `${estudiante.nombre} ${estudiante.apellido}`;
+                        studentList.appendChild(li);
+                    });
+
+                    const exerciseList = document.getElementById('exercise-list');
+                    data.ejercicios.forEach(ejercicio => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.href = `examen.html?id_ejercicio=${ejercicio.id_ejercicio}`;
+                        a.textContent = ejercicio.titulo;
+                        li.appendChild(a);
+                        exerciseList.appendChild(li);
+                    });
+
+                    if (data.maestro) {
+                        document.getElementById('teacher-buttons').style.display = 'block';
+                        document.getElementById('create-exercise').onclick = () => {
+                            window.location.href = `subir_ejercicio.html?id_clase=${id_clase}`;
+                        };
+                        document.getElementById('view-attempts').onclick = () => {
+                            window.location.href = `ver_intentos.html?id_clase=${id_clase}`;
+                        };
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
