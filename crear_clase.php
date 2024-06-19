@@ -15,35 +15,29 @@ if (isset($_POST['submit'])) {
         die("Conexión fallida: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO Clases (nombre_clase, codigo_clase) VALUES ('$nombre_clase', '$codigo_clase')";
-    if ($conn->query($sql) === TRUE) {
+    // Inserción de la clase en la tabla Clases usando prepared statements
+    $sql = "INSERT INTO Clases (nombre_clase, codigo_clase) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $nombre_clase, $codigo_clase);
+
+    if ($stmt->execute()) {
         $id_clase = $conn->insert_id;
-        $sql_assign = "INSERT INTO Maestros_Clases (id_maestro, id_clase) VALUES ('$id_maestro', '$id_clase')";
-        if ($conn->query($sql_assign) === TRUE) {
+        // Asignación de la clase al maestro en la tabla Maestros_Clases usando prepared statements
+        $sql_assign = "INSERT INTO Maestros_Clases (id_maestro, id_clase) VALUES (?, ?)";
+        $stmt_assign = $conn->prepare($sql_assign);
+        $stmt_assign->bind_param("ii", $id_maestro, $id_clase);
+
+        if ($stmt_assign->execute()) {
             echo "Clase creada exitosamente. Código de la clase: " . $codigo_clase;
         } else {
-            echo "Error al asignar la clase: " . $conn->error;
+            echo "Error al asignar la clase: " . $stmt_assign->error;
         }
+        $stmt_assign->close();
     } else {
-        echo "Error al crear la clase: " . $conn->error;
+        echo "Error al crear la clase: " . $stmt->error;
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Clase</title>
-</head>
-<body>
-    <h2>Crear Clase</h2>
-    <form action="crear_clase.php" method="post">
-        <label for="nombre_clase">Nombre de la Clase:</label><br>
-        <input type="text" id="nombre_clase" name="nombre_clase" required><br><br>
-        <input type="submit" name="submit" value="Crear Clase">
-    </form>
-</body>
-</html>
