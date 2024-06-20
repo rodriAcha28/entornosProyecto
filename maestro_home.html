@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Clases</title>
+    <link rel="stylesheet" href="modulos.css">
+    <link rel="stylesheet" href="examen.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="home.css">
+    <style>
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <span class="navbar-title">Curso</span>
+        </div>
+        <div class="navbar-center">
+            <a href="#" class="navbar-link">Inicio</a>
+            <a href="#" class="navbar-link">Lecciones</a>
+            <a href="#" class="navbar-link">Recursos</a>
+        </div>
+        <div class="navbar-right">
+            <a href="logout.php" class="navbar-login">Cerrar Sesión</a>
+        </div>
+    </nav>
+    <h2>Mis Clases</h2>
+    <ul id="class-list">
+        <!-- Las clases serán cargadas aquí por maestro_home.php -->
+    </ul>
+    <button class="floating-button" onclick="window.location.href='crear_clase.html'">+</button>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('maestro_home.php')
+                .then(response => response.json())
+                .then(data => {
+                    const classList = document.getElementById('class-list');
+                    if (data.length > 0) {
+                        data.forEach(clase => {
+                            const li = document.createElement('li');
+                            const a = document.createElement('a');
+                            a.href = `ver_clase.html?id_clase=${clase.id_clase}`;
+                            a.textContent = clase.nombre_clase;
+                            li.appendChild(a);
+                            classList.appendChild(li);
+                        });
+                    } else {
+                        const li = document.createElement('li');
+                        li.textContent = "No estás a cargo de ninguna clase.";
+                        classList.appendChild(li);
+                    }
+                });
+        });
+        </script>
+        
+</body>
+</html>

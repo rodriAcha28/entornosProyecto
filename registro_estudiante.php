@@ -5,19 +5,6 @@
     <title>Registro de Estudiante</title>
 </head>
 <body>
-    <h2>Registro de Estudiante</h2>
-    <form action="registro_estudiante.php" method="post">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br><br>
-        <label for="apellido">Apellido:</label><br>
-        <input type="text" id="apellido" name="apellido" required><br><br>
-        <label for="email">Correo electrónico:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="password">Contraseña:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-        <input type="submit" name="submit" value="Registrarse">
-    </form>
-
     <?php
     if (isset($_POST['submit'])) {
         $nombre = $_POST['nombre'];
@@ -31,14 +18,19 @@
             die("Conexión fallida: " . $conn->connect_error);
         }
 
-        $sql = "INSERT INTO Estudiantes (nombre, apellido, email, contrasena) VALUES ('$nombre', '$apellido', '$email', '$password')";
+        $sql = "INSERT INTO Estudiantes (nombre, apellido, email, contrasena) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $nombre, $apellido, $email, $password);
 
-        if ($conn->query($sql) === TRUE) {
-            echo "Estudiante registrado exitosamente";
+        if ($stmt->execute()) {
+            // Redirige a la página de login
+    header("Location: login_estudiante.html");
+    exit();
         } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "Error al registrar estudiante: " . $stmt->error;
         }
 
+        $stmt->close();
         $conn->close();
     }
     ?>
