@@ -26,11 +26,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Redirige según el rol del usuario
 if ($valid) {
+    session_start();
+    $_SESSION['id_usuario'] = $_POST['user_id'];
+    $_SESSION['nombre_usuario'] = $_POST['lis_person_name_full'];
+    $_SESSION['correo_usuario'] = $_POST['lis_person_contact_email_primary'];
     $roles = $_POST['roles'];
+
     if (strpos($roles, 'Instructor') !== false) {
-        header('Location: /dashboard/docente.php');
+        $_SESSION['id_maestro'] = $_POST['user_id'];
+        header('Location: /maestro_home.html');
+    } elseif (strpos($roles, 'Learner') !== false) {
+        $_SESSION['id_estudiante'] = $_POST['user_id'];
+        header('Location: /estudiante_home.html');
     } else {
-        header('Location: /dashboard/estudiante.php');
+        echo 'Acceso denegado: Usuario no autorizado';
     }
 } else {
     echo 'Invalid LTI request';
